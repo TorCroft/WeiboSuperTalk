@@ -1,4 +1,4 @@
-name: Aliyun Checkin
+name: Weibo Sign-in
 
 on:
   workflow_dispatch:
