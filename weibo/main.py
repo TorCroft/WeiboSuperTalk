@@ -82,7 +82,7 @@ class Weibo(object):
         for result in raw_results:
             result_str += parse_result(result)
         result_str += "*" * 25
-        logger.debug('\n'+result_str)
+        logger.info('\n'+result_str)
 
         if all([i["is_sign"] for i in raw_results]) is False:
             notify_user(title="WeiboSuperTalk", content=result_str ,notifier=self.notifier, key=self.notifier_key)
