@@ -1,0 +1,20 @@
+[2023-09-24 04:07:37 UTC+8] [INFO] [main.py line 76] Successfully signed in 郑州大学.
+[2023-09-24 04:07:38 UTC+8] [INFO] [main.py line 76] Successfully signed in 西安电子科技大学.
+[2023-09-24 04:07:39 UTC+8] [INFO] [main.py line 76] Successfully signed in Steam.
+[2023-09-24 04:07:39 UTC+8] [INFO] [main.py line 85] 
+*************************
+  Date: 2023-09-24
+  SuperTalk: 郑州大学
+  Level: 11
+  Status: True
+*************************
+  Date: 2023-09-24
+  SuperTalk: 西安电子科技大学
+  Level: 5
+  Status: True
+*************************
+  Date: 2023-09-24
+  SuperTalk: Steam
+  Level: 4
+  Status: True
+*************************
