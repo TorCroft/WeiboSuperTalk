@@ -1,0 +1,21 @@
+[2023-10-02 04:08:05 UTC+8] [DEBUG] [logger.py line 32] Deleted log file: logs/log_20230918.log
+[2023-10-02 04:08:08 UTC+8] [INFO] [main.py line 76] Successfully signed in 郑州大学.
+[2023-10-02 04:08:08 UTC+8] [INFO] [main.py line 76] Successfully signed in Steam.
+[2023-10-02 04:08:09 UTC+8] [INFO] [main.py line 76] Successfully signed in 西安电子科技大学.
+[2023-10-02 04:08:09 UTC+8] [INFO] [main.py line 85] 
+*************************
+  Date: 2023-10-02
+  SuperTalk: 郑州大学
+  Level: 11
+  Status: True
+*************************
+  Date: 2023-10-02
+  SuperTalk: Steam
+  Level: 6
+  Status: True
+*************************
+  Date: 2023-10-02
+  SuperTalk: 西安电子科技大学
+  Level: 6
+  Status: True
+*************************
