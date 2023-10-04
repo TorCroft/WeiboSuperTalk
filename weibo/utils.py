@@ -37,6 +37,7 @@ def parse_result(result: dict):
 def load_config():
     logger.info("Load config environment variable 'WEIBO_PARAMS'.")
     if (config := os.environ.get("WEIBO_PARAMS")):
+        config = json.loads(config)
         return config["params"], config["cookie"], config["notifier"], config["key"]
     else:
         logger.info("'WEIBO_PARAMS' not found.")
