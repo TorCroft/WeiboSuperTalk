@@ -1,6 +1,7 @@
 # Docs builded
 docs/build/
-
+# Custom
+localconfig.json
 test*.py
 
 # Byte-compiled / optimized / DLL files
