@@ -1,0 +1,28 @@
+[2023-11-23 04:09:08 UTC+8] [DEBUG] [logger.py line 32] Deleted log file: logs/log_20231109.log
+[2023-11-23 04:09:08 UTC+8] [INFO] [utils.py line 38] Load config environment variable 'WEIBO_PARAMS'.
+[2023-11-23 04:09:11 UTC+8] [INFO] [main.py line 84] Successfully signed in 郑州大学.
+[2023-11-23 04:09:12 UTC+8] [INFO] [main.py line 84] Successfully signed in Steam.
+[2023-11-23 04:09:13 UTC+8] [INFO] [main.py line 84] Successfully signed in gta.
+[2023-11-23 04:09:15 UTC+8] [INFO] [main.py line 84] Successfully signed in 西安电子科技大学.
+[2023-11-23 04:09:15 UTC+8] [INFO] [main.py line 93] 
+*************************
+  Date: 2023-11-23
+  SuperTalk: 郑州大学
+  Level: 11
+  Status: True
+*************************
+  Date: 2023-11-23
+  SuperTalk: Steam
+  Level: 8
+  Status: True
+*************************
+  Date: 2023-11-23
+  SuperTalk: gta
+  Level: 7
+  Status: True
+*************************
+  Date: 2023-11-23
+  SuperTalk: 西安电子科技大学
+  Level: 7
+  Status: True
+*************************
