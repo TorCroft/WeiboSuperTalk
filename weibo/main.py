@@ -1,19 +1,25 @@
 import re
-from .utils import request, nested_lookup, cookie_to_dict, load_config, parse_result, notify_user, logger
+from .utils import (
+    request,
+    nested_lookup,
+    cookie_to_dict,
+    load_config,
+    parse_result,
+    notify_user,
+    logger,
+    WeiboSignExpection
+)
+
 
 class Weibo(object):
     def __init__(self):
-        params, cookie, self.notifier, self.notifier_key = load_config()
-        self.params = cookie_to_dict(params.replace("&", ";"))
-        self.cookie = cookie_to_dict(cookie)
+        self.params, self.cookie, self.notifier, self.notifier_key = load_config()
         self.container_id = "100808fc439dedbb06ca5fd858848e521b8716"
         self.ua = "WeiboOverseas/6.2.9 (iPhone; iOS 16.6.1; Scale/3.00)"
         self.headers = {"User-Agent": self.ua}
         self.follow_data_url = "https://api.weibo.cn/2/cardlist"
         self.sign_url = "https://api.weibo.cn/2/page/button"
         self.event_url = f"https://m.weibo.cn/api/container/getIndex?containerid={self.container_id}_-_activity_list"
-        self.mybox_url = "https://ka.sina.com.cn/html5/mybox"
-        self.draw_url = "https://games.weibo.cn/prize/aj/lottery"
         self._follow_data = []
 
     @property
@@ -22,7 +28,7 @@ class Weibo(object):
             url = self.follow_data_url
             self.params["containerid"] = "100803_-_followsuper"
             # turn off certificate verification
-            response = request(
+            response: dict = request(
                 "get",
                 url,
                 params=self.params,
@@ -30,28 +36,30 @@ class Weibo(object):
                 cookies=self.cookie,
                 verify=False,
             ).json()
+            if "errno" in response:
+                msg = f'{response.get("errtype")}: {response.get("errmsg")}'
+                logger.error(msg)
+                raise WeiboSignExpection(message=msg)
+
             card_group = nested_lookup(response, "card_group", fetch_first=True)
             follow_list = [i for i in card_group if i["card_type"] == "8"]
+
+            # fmt: off
             for i in follow_list:
                 action = nested_lookup(i, "action", fetch_first=True)
-                request_url = (
-                    "".join(re.findall("request_url=(.*)%26container", action))
-                    if action
-                    else None
-                )
+                request_url = ("".join(re.findall("request_url=(.*)%26container", action)) if action else None)
                 follow = {
                     "name": nested_lookup(i, "title_sub", fetch_first=True),
                     "level": int(re.findall("\d+", i["desc1"])[0]),
-                    "is_sign": False
-                    if nested_lookup(i, "name", fetch_first=True) == "签到"
-                    else True,
+                    "is_sign": False if nested_lookup(i, "name", fetch_first=True) == "签到" else True,
                     "request_url": request_url,
                 }
                 self._follow_data.append(follow)
-
+            # fmt: on
             self._follow_data.sort(key=lambda k: (k["level"]), reverse=True)
         return self._follow_data
 
+    # fmt: off
     def sign(self) -> str:
         raw_results = []
         for follow in self.follow_data:
@@ -77,13 +85,14 @@ class Weibo(object):
                 else:
                     logger.info(f"SuperTalk {follow['name']} sign-in failed.")
             raw_results.append(follow)
-        
+
         result_str = ""
         for result in raw_results:
             result_str += parse_result(result)
         result_str += "*" * 25
-        logger.debug('\n'+result_str)
+        logger.info("\n" + result_str)
 
         if all([i["is_sign"] for i in raw_results]) is False:
-            notify_user(title="WeiboSuperTalk", content=result_str ,notifier=self.notifier, key=self.notifier_key)
+            notify_user(title="WeiboSuperTalk", content=result_str, notifier=self.notifier, key=self.notifier_key,)
         return result_str
+    # fmt: on

@@ -2,7 +2,10 @@ from datetime import datetime, timezone, timedelta
 import logging, sys, os, glob, re
 
 LOG_FOLDER = "logs"
-MAX_LOG_FILES = 30
+MAX_LOG_FILES = 7
+
+if not os.path.exists(LOG_FOLDER):
+    os.mkdir(LOG_FOLDER)
 
 # Define a UTC+8 timezone offset
 UTC_OFFSET = timezone(timedelta(hours=8))

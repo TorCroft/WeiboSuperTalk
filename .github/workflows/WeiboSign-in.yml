@@ -12,12 +12,15 @@ jobs:
       contents: write
       
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Set up Python 3.11
-        uses: actions/setup-python@v4
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
-          python-version: 3.11
+          fetch-depth: 2
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
 
       - name: Install dependencies
         run: |
@@ -27,17 +30,27 @@ jobs:
       - name: Run Python Script
         env:
           WEIBO_PARAMS: ${{ secrets.WEIBO_PARAMS }}
-
         run: python3 ./index.py
-      
-      - name: Get current UTC time
-        run: echo "timestamp=$(date -u +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_OUTPUT
-        id: time
 
-      - name: Push if there are any changes
+      - name: Get last commit message
+        id: commit_message
+        run: echo "last_commit_message=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
+
+      - name: Push changes
+        if: ${{!startsWith(steps.commit_message.outputs.last_commit_message, 'Updated at ') }}
         run: |
           git config --global user.email "${{ secrets.EMAIL }}"
           git config --global user.name "${{ secrets.USERNAME }}"
           git add .
-          git commit -m "Log Upload at - ${{ steps.time.outputs.timestamp }} UTC" && git push || echo "No changes to commit"
+          git commit -m "Updated at $(date -u +'%Y-%m-%d %H:%M:%S') UTC"
+          git push
           
+      - name: Force push changes
+        if: ${{startsWith(steps.commit_message.outputs.last_commit_message, 'Updated at ') }}
+        run: |
+          git config --global user.email "${{ secrets.EMAIL }}"
+          git config --global user.name "${{ secrets.USERNAME }}"
+          git add .
+          git reset --soft HEAD^
+          git commit -m "Updated at $(date -u +'%Y-%m-%d %H:%M:%S') UTC"
+          git push --force
