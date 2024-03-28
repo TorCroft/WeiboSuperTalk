@@ -1,0 +1,34 @@
+[2024-03-29 04:10:12 UTC+8] [DEBUG] [logger.py line 32] Deleted log file: logs/log_20240322.log
+[2024-03-29 04:10:12 UTC+8] [INFO] [utils.py line 38] Load config environment variable 'WEIBO_PARAMS'.
+[2024-03-29 04:10:16 UTC+8] [INFO] [main.py line 84] Successfully signed in 郑州大学.
+[2024-03-29 04:10:17 UTC+8] [INFO] [main.py line 84] Successfully signed in gta.
+[2024-03-29 04:10:18 UTC+8] [INFO] [main.py line 84] Successfully signed in Steam.
+[2024-03-29 04:10:19 UTC+8] [INFO] [main.py line 84] Successfully signed in 西安电子科技大学.
+[2024-03-29 04:10:20 UTC+8] [INFO] [main.py line 84] Successfully signed in 龚俊.
+[2024-03-29 04:10:20 UTC+8] [INFO] [main.py line 93] 
+*************************
+  Date: 2024-03-29
+  SuperTalk: 郑州大学
+  Level: 11
+  Status: True
+*************************
+  Date: 2024-03-29
+  SuperTalk: gta
+  Level: 9
+  Status: True
+*************************
+  Date: 2024-03-29
+  SuperTalk: Steam
+  Level: 9
+  Status: True
+*************************
+  Date: 2024-03-29
+  SuperTalk: 西安电子科技大学
+  Level: 9
+  Status: True
+*************************
+  Date: 2024-03-29
+  SuperTalk: 龚俊
+  Level: 7
+  Status: True
+*************************
