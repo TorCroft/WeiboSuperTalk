@@ -3,6 +3,8 @@ docs/build/
 # Custom
 localconfig.json
 test*.py
+pytest/
+logs/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -11,7 +13,6 @@ __pycache__/
 
 # C extensions
 *.so
-pytest/
 
 # Distribution / packaging
 .Python
