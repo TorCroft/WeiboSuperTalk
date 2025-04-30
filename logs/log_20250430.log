@@ -1,0 +1,9 @@
+[2025-04-30 19:42:15 UTC+8] [DEBUG] [logger.py line 32] Deleted log file: logs/log_20240530.log
+[2025-04-30 19:42:15 UTC+8] [INFO] [utils.py line 38] Load config environment variable 'WEIBO_PARAMS'.
+[2025-04-30 19:42:17 UTC+8] [INFO] [main.py line 93] 
+*************************
+  Date: 2025-04-30
+  SuperTalk: 原神
+  Level: 2
+  Status: True
+*************************
