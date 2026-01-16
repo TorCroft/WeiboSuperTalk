@@ -21,9 +21,10 @@ class WeiboSignExpection(Exception):
 
 
 def now() -> datetime:
+    """返回北京时间 datetime 对象"""
     beijing = timezone(timedelta(hours=8))
-    utcnow = datetime.utcnow().replace(tzinfo=timezone.utc)
-    return utcnow.astimezone(beijing)
+    # 直接生成 UTC 带时区对象，再转换到北京时间
+    return datetime.now(timezone.utc).astimezone(beijing)
 
 
 def today() -> str:
@@ -35,15 +36,29 @@ def parse_result(result: dict):
 
 
 def load_config():
-    logger.info("Load config environment variable 'WEIBO_PARAMS'.")
-    if (config := os.environ.get("WEIBO_PARAMS")):
-        config = json.loads(config)
-        return config["params"], config["cookie"], config["notifier"], config["key"]
-    else:
-        logger.info("'WEIBO_PARAMS' not found.")
-    logger.info("Load config from local file.")
-    with open("./localconfig.json", "r", encoding="utf-8") as config_file:
-        config = json.load(config_file)
+    """
+    加载 WeiboSuperTalk 配置
+    优先使用环境变量 WEIBO_PARAMS（可用于临时覆盖），否则加载本地 localconfig.json
+    """
+    env_config = os.environ.get("WEIBO_PARAMS")
+    if env_config:
+        try:
+            config = json.loads(env_config)
+            logger.info("Loaded config from environment variable 'WEIBO_PARAMS'.")
+            return config["params"], config["cookie"], config["notifier"], config["key"]
+        except Exception as e:
+            logger.warning(f"Failed to load 'WEIBO_PARAMS', fallback to local file. Error: {e}")
+
+    # 默认加载本地配置
+    local_path = "./localconfig.json"
+    if not os.path.exists(local_path):
+        logger.error(f"Local config file not found: {local_path}")
+        raise FileNotFoundError(f"{local_path} does not exist")
+
+    with open(local_path, "r", encoding="utf-8") as f:
+        config = json.load(f)
+
+    logger.info(f"Loaded config from local file: {local_path}")
     return config["params"], config["cookie"], config["notifier"], config["key"]
 
 
